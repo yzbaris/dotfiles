@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Deploys the keyd system config (root-owned /etc, so chezmoi can't place it directly).
+# Re-runs whenever dot_config/keyd/default.conf changes.
+# hash: {{ include "dot_config/keyd/default.conf" | sha256sum }}
+set -euo pipefail
+
+sudo mkdir -p /etc/keyd
+sudo cp "$HOME/.config/keyd/default.conf" /etc/keyd/default.conf
+sudo keyd reload
